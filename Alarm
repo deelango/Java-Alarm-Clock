@@ -36,7 +36,7 @@ public class Alarm
      * @param onOff: sets the alarm to either on or off.
      */
     public Alarm(int hour, int minute, String choice, Boolean onOff) 
-    {   
+    {    
         alarms = new ClockDisplay12();
         alarms.setTime(hour,minute,choice);
         bool = true;
