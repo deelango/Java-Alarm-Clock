@@ -1,0 +1,155 @@
+
+/**
+ * The ClockDisplay class implements a digital clock display for a
+ * European-style 12 hour clock. The clock shows hours and minutes. The 
+ * range of the clock is 1  to 12:59 
+ * 
+ * 
+ * The clock display receives "ticks" (via the timeTick method) every minute
+ * and reacts by incrementing the display. This is done in the usual clock
+ * fashion: the hour increments when the minutes roll over to zero.
+ * 
+ * @author Michael Kölling and David J. Barnes
+ * @version 2011.07.31
+ * 
+ */
+public class ClockDisplay12
+{
+    private NumberDisplay hours;
+    private NumberDisplay minutes;
+    private String displayString;// simulates the actual display
+    public static final String AM = "a.m."; // string "a.m."
+    public static final String PM = "p.m."; // string "p.m."
+    private static String amPm; // variable string amPm used for final string
+                                // to display am/pm in updateDisplay()
+    /**
+     * Constructor for ClockDisplay objects. This constructor 
+     * creates a new clock set at 12:00a.m.
+     * Changed the new rollover limit to 13 so the clock the new limits
+     * for time are 1 to 12
+     */
+    public ClockDisplay12()
+    {
+        hours = new NumberDisplay(13);
+        minutes = new NumberDisplay(60);
+        
+        for (int i=0;i<12;i++) {
+            hours.increment();
+            amPm = AM;
+            updateDisplay();
+        }
+    }
+
+    /**
+     * Constructor for ClockDisplay objects. This constructor
+     * creates a new clock set at the time specified by the 
+     * parameters and if the time is am/pm.
+     * display between 1 and 12.
+     * if invalid input time defaults to 12:00
+     * if invalid input string "choice" (am/pm) defaults to "a.m."
+     * @param hour: the hour that the user would like the clock
+     * @param minute: the minute that will be displayed if 60 rollsover to 0.
+     * @param choice: lets the user choose if the time is am/pm.
+     */
+    public ClockDisplay12(int hour, int minute, String choice)
+    {
+        hours = new NumberDisplay(13);
+        minutes = new NumberDisplay(60);
+        setTime(hour, minute, choice);
+        
+        if(hour > 12 || hour <=0 || (hour == 12 && minute > 59)) {
+        hours = new NumberDisplay(13);
+        minutes = new NumberDisplay(60);
+        
+        for (int i=0;i<12;i++) {
+            hours.increment();
+            amPm = AM;
+            updateDisplay();
+        }
+      }   
+    }
+
+    /**
+     * This method should get called once every minute - it makes
+     * the clock display go one minute forward.
+     * if time is 11:59 am/pm and timeTick is invoked am becomes pm
+     * and pm becomes am
+     */
+    public void timeTick()
+    {
+        if(hours.getValue() == 11 & minutes.getValue() == 59) {
+         if(amPm.equals(AM)){
+             amPm = PM;
+         }else {
+              amPm = AM;
+         }
+       }
+        
+        minutes.increment();
+        if(minutes.getValue() == 0) {  // it just rolled over!
+            hours.increment();
+        }
+        updateDisplay();
+    }
+
+
+    /**
+     * Set the time of the display to the specified hour and
+     * minute.
+     * if minute is 60 hours increments by 1 and minutes increments to 0.
+     * 
+     * @param hour: the hour that the user would like the clock
+     * @param minute: the minute that will be displayed if 60 rollsover to 0.
+     * @param choice: lets the user choose if the time is am/pm.
+     */
+    public void setTime(int hour, int minute, String choice)
+    {
+        hours.setValue(hour);
+        minutes.setValue(minute);
+        
+        if(minute == 60 && hour != 11) {
+            hours.increment();
+        }
+  
+        if(choice.equals(AM)) {
+            amPm = AM; 
+        } else if(choice.equals(PM)) {
+            amPm = PM;
+        } else {
+            amPm = AM;
+        }
+        
+        if(minute == 60 & hour == 11) {
+            hours.increment();
+            if(choice.equals(AM)) {
+                amPm = PM;
+            } else {
+                amPm = AM;
+            }
+        }
+   
+        updateDisplay();
+    }
+
+    /**
+     * Return the current time of this display in the format HH:MM.
+     *  @return the current time of this display in the format HH:MM
+     */
+    public String getTime()
+    {
+        return displayString;
+    }
+    
+    /**
+     * Update the internal string that represents the display.
+     * ADDED: amPm to the string so "a.m." or "p.m." will be displayed.
+     */
+    private void updateDisplay()
+    {
+       displayString = hours.getDisplayValue() + ":" + 
+                        minutes.getDisplayValue() + amPm;
+        
+       
+    }
+}
+    
