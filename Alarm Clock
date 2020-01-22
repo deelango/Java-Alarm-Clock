@@ -1,0 +1,100 @@
+
+/**
+ * The AlarmClock Class creats an alarm and a clock for a European-style 12 hour clock.
+ * 
+ */
+public class AlarmClock
+{
+
+    private ClockDisplay12 clock;
+    private Alarm alarm;
+    private static Boolean bool; 
+    private static Boolean isOn;
+
+    
+    
+    
+    /**
+     * Constructor for objects of class Alarm. This constructor 
+     * creates a clock/alarm and sets it to midnight and Alarm to Off
+     */
+    public AlarmClock()
+    {
+         alarm = new Alarm();
+         clock = new ClockDisplay12();
+         
+        }
+    
+         
+         
+    public AlarmClock(int Thour, int Tminute, String Tchoice, int Ahour, int Aminute, String Achoice, Boolean onOff) {
+         clock = new ClockDisplay12(Thour, Tminute, Tchoice);
+         alarm = new Alarm(Ahour, Aminute, Achoice, onOff);
+    }
+    
+    /**
+     * This method sets the time of the alarm to the specified hour
+     * and minute. and sets the set flag to true, so the alarm is set.
+     * @param hour: the hour that the user would like the clock
+     * @param minute: the minute that will be displayed if 60 rollsover to 0.
+     * @param choice: lets the user choose if the time is am/pm.
+     */
+    public void setTime(int hour, int minute, String choice)
+    {
+        clock.setTime(hour,minute,choice);
+        
+    }
+    
+    /**
+     * This method sets the time of the alarm to the specified hour
+     * and minute. and sets the set flag to true, so the alarm is set.
+     * @param hour: the hour that the user would like the clock
+     * @param minute: the minute that will be displayed if 60 rollsover to 0.
+     * @param choice: lets the user choose if the time is am/pm.
+     */
+    public void setAlarmTime(int hour, int minute, String choice)
+    {
+        alarm.setTime(hour,minute,choice);
+        
+    }
+    
+     /**
+     * 
+     */
+    public void clockTick()
+    {   
+        
+       clock.timeTick();
+       if(clock.getTime() == alarm.getTime()) {
+           System.out.println("RING RING RING, wake up its time to go to school");
+        }
+       
+    
+     }
+    
+    public String setAlarm() 
+    {
+        return alarm.turnOn();
+    }
+    
+    public String unsetAlarm()
+    {
+        return alarm.turnOff();
+    }
+    
+    public String getTime()
+    {
+         return clock.getTime();
+    }
+    public String getAlarmTime() 
+    {
+         return alarm.getTime();
+    }
+    public Boolean isAlarmSet()
+    {
+       return alarm.isSet();
+    }
+}  
+    
+    
+    
