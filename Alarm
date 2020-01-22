@@ -1,0 +1,117 @@
+
+/**
+ * The Alarm Class creats an alarm for a European-style 12 hour clock.
+ * 
+ * 
+ */
+public class Alarm
+{
+   
+    private ClockDisplay12 alarms;
+    private static Boolean bool;
+    private static Boolean isOn;    
+    
+    
+    /**
+     * Constructor for objects of class Alarm. This constructor 
+     * creates a clock/alarm and sets it to midnight and Alarm to Off
+     */
+    public Alarm()
+    {
+         alarms = new ClockDisplay12();
+         bool = true;
+         alarms.setTime(12,0,"a.m.");
+         isOn = false;
+         
+    }
+    
+     /**
+     * Constructor for objects of class Alarm. This constructor 
+     * creates a clock/alarm and sets it to the time specified by the 
+     * parameter and if the time is am/pm. And also
+     * sets the alarm to either on or off
+     * @param hour: the hour that the user would like the clock
+     * @param minute: the minute that will be displayed if 60 rollsover to 0.
+     * @param choice: lets the user choose if the time is am/pm.
+     * @param onOff: sets the alarm to either on or off.
+     */
+    public Alarm(int hour, int minute, String choice, Boolean onOff) 
+    {   
+        alarms = new ClockDisplay12();
+        alarms.setTime(hour,minute,choice);
+        bool = true;
+        if(onOff == true) {
+            turnOn();
+        }
+        else {
+            turnOff();
+        }
+    }
+    
+    /**
+     * This method sets the time of the alarm to the specified hour
+     * and minute. and sets the set flag to true, so the alarm is set.
+     * @param hour: the hour that the user would like the clock
+     * @param minute: the minute that will be displayed if 60 rollsover to 0.
+     * @param choice: lets the user choose if the time is am/pm.
+     */
+    public void setTime(int hour, int minute, String choice)
+    {
+        alarms.setTime(hour,minute,choice);
+        bool = true;
+    }
+    
+    
+    /**
+     * This method turns the alarm on, if the alarm was off
+     * it turns it on and if the alarm was already on no changes occur.
+     * @return "Turnedon" if alarm was off and then turned on
+     * @return "Was already on" if alarm was already on
+     */
+    
+    public String turnOn() {
+        if(isOn == false) {
+            isOn = true;
+            return "TurnedOn";
+         }
+            return "Was already On";
+      }
+    /**
+     * This method turns the alarm off, if the alarm was on
+     * it turns it off and if the alarm was already on off changes occur.
+     * @return "Turned off" if alarm was on and then turned off
+     * @return "Was already off" if alarm was already off
+     */  
+    public String turnOff() {
+        if(isOn == true) {
+            isOn = false;
+            return "TurnedOff";
+        }
+            return "was already Off";
+     }
+    /**
+     * Return the current time of this display in the format HH:MM.
+     * @return the current time of this display in the format HH:MM
+     */
+    public String getTime() {
+      
+        return alarms.getTime();
+    }
+    /**
+     * this method returns true if the alarm clock was set and false 
+     * if it wasnt set.
+     * @return true if alarm is set
+     * @return false if alarm is not set
+     */
+    public Boolean isSet() {
+        if(bool == true) {
+            return true;
+        }
+            return false;
+    }
+        
+}   
+
+ 
+    
+
